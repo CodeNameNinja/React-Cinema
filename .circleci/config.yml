@@ -85,13 +85,13 @@ jobs:
           name: Deploy to AWS Cloudfront
           command: |
             aws configure set preview.cloudfront true
-            if [ "${CIRCLE_BRANCH}" == "main"]
+            if [ "${CIRCLE_BRANCH}" == "main" ]
             then
              aws cloudfront create-invalidation --distribution-id ${PROD_DISTRIBUTION_ID} --paths "/\*"
-            elif [ "${CIRCLE_BRANCH}" == "staging"]
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
               aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths "/\*"
-            elif [ "${CIRCLE_BRANCH}" == "develop"]
+            elif [ "${CIRCLE_BRANCH}" == "develop" ]
             then
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTIBUTION_ID} --paths "/\*"
             fi
