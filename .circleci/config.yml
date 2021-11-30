@@ -37,7 +37,6 @@ jobs:
           command: |
             sudo apt-get -y -qq update
             sudo apt-get install awscli
-            sudo apt-get install -y python-pip python-dev build-essential
       - run:
           name: Build project
           command: |
@@ -76,7 +75,6 @@ jobs:
           command: |
             sudo apt-get -y -qq update
             sudo apt-get install awscli
-            sudo apt-get install -y python-pip python-dev build-essential
       - run:
           name: Build project
           command: |
