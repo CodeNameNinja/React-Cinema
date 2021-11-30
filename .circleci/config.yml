@@ -57,8 +57,6 @@ jobs:
             elif [ "${CIRCLE_BRANCH}" == "develop"]
             then
               aws --region ${AWS_REGION} s3 sync ~/project/build s3://${AWS_DEV_BUCKET} --delete
-            else
-              echo "No branch found"
             fi
   deploy-to-aws-cloudfront:
     docker:
@@ -96,8 +94,6 @@ jobs:
             elif [ "${CIRCLE_BRANCH}" == "develop"]
             then
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTIBUTION_ID} --paths "/\*"
-            else
-              echo "No branch found"
             fi
 workflows:
   build_and_deploy:
