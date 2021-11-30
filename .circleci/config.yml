@@ -24,7 +24,7 @@ jobs:
 
   deploy-to-aws-s3:
     docker:
-      - image: cimg/node:17.1.0
+      - image: cimg/node:14.15.5
     working_directory: ~/project
     steps:
       - checkout
@@ -62,7 +62,7 @@ jobs:
             fi
   deploy-to-aws-cloudfront:
     docker:
-      - image: cimg/node:17.1.0
+      - image: cimg/node:14.15.5
     working_directory: ~/project
     steps:
       - checkout
