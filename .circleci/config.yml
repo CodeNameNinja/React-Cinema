@@ -92,10 +92,10 @@ jobs:
              aws cloudfront create-invalidation --distribution-id ${PROD_DISTRIBUTION_ID} --paths "/\*"
             elif [ "${CURRENT_BRANCH}" == "staging"]
             then
-            aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths "/\*"
+              aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths "/\*"
             elif [ "${CURRENT_BRANCH}" == "develop"]
             then
-            aws cloudfront create-invalidation --distribution-id ${DEV_DISTIBUTION_ID} --paths "/\*"
+              aws cloudfront create-invalidation --distribution-id ${DEV_DISTIBUTION_ID} --paths "/\*"
             else
               echo "No branch found"
             fi
