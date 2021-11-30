@@ -1,10 +1,12 @@
 version: 2.1
-
+executors:
+    app-executor:
+      docker:
+        - image: cimg/node:14.15.5
+      working_directory: ~/project
 jobs:
   build:
-    docker:
-      - image: cimg/node:17.1.0
-    working_directory: ~/project
+    executor: app-executor
     steps:
       - checkout
       - run:
@@ -23,9 +25,7 @@ jobs:
           key: app-{{checksum "package.json"}}
 
   deploy-to-aws-s3:
-    docker:
-      - image: cimg/node:14.15.5
-    working_directory: ~/project
+    executor: app-executor
     steps:
       - checkout
       - run:
@@ -59,9 +59,7 @@ jobs:
               aws --region ${AWS_REGION} s3 sync ~/project/build s3://${AWS_DEV_BUCKET} --delete
             fi
   deploy-to-aws-cloudfront:
-    docker:
-      - image: cimg/node:14.15.5
-    working_directory: ~/project
+    executor: app-executor
     steps:
       - checkout
       - run:
