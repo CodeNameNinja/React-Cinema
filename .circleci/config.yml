@@ -134,7 +134,11 @@ jobs:
     steps:
       - run: echo "Slack notification"
       - slack/notify:
-          event: 'always'
+          event: fail
+          mentions: '@EngineeringTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: 'pass'
           channel: 'cinema-circle-ci'
           template: ''
           custom: |
@@ -235,11 +239,4 @@ workflows:
                 - develop
 
       - notify-via-slack:
-          requires:
-            - deploy-to-aws-cloudfront
-          filters:
-            branches:
-              only:
-                - main
-                - staging
-                - develop
+          context: slack-secrets
