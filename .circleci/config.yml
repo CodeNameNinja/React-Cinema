@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.5.0
 commands:
-  notify-via-slack-success:
+  notify-via-slack:
     steps:
       - run: echo "Slack notification"
       - slack/notify:
@@ -79,7 +79,7 @@ aliases:
   - &show-current-branch-name
     run:
       name: Show Current Branch
-      command: echo ${CURRENT_BRANCH}
+      command: echo ${CURRENT_BRANCHewsdf}
   - &restore_cache
     restore_cache:
       keys:
@@ -120,6 +120,7 @@ jobs:
       - *restore_cache
       - *install_dependencies
       - *save_cache
+      - notify-via-slack
 
   linting:
     executor: app-executor
@@ -190,7 +191,7 @@ jobs:
             then
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTIBUTION_ID} --paths "/*"
             fi
-      - notify-via-slack-success
+      - notify-via-slack
 
 workflows:
   build_and_deploy:
