@@ -68,10 +68,10 @@ jobs:
       - *show-current-branch-name
       - *restore_cache
       - run:
-          name: Check Prettier
+          name: run prettier check
           command: npm run prettier:check
       - run:
-          name: Fix Prettier
+          name: run prettier write
           command: npm run prettier:write
 
   deploy-to-aws-s3:
