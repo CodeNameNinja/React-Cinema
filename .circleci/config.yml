@@ -237,6 +237,24 @@ workflows:
                 - main
                 - staging
                 - develop
-
+      - slack/on-hold:
+          context: slack-secrets
+          filters:
+            tags:
+              only: /^v.*/
+          requires:
+            - deploy-to-aws-cloudfront
+      - pause_workflow:
+          filters:
+            tags:
+              only: /^v.*/
+          requires:
+            - deploy-to-aws-cloudfront
+            - slack/on-hold
       - notify-via-slack:
           context: slack-secrets
+          filters:
+            tags:
+              only: /^v.*/
+          requires:
+            - pause_workflow
