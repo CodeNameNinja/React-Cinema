@@ -79,7 +79,7 @@ aliases:
   - &show-current-branch-name
     run:
       name: Show Current Branch
-      command: BAD CODE
+      command: echo ${CURRENT_BRANCH}
   - &restore_cache
     restore_cache:
       keys:
