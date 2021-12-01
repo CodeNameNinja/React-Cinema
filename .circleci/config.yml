@@ -3,7 +3,15 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.5.0
 commands:
-  notify-via-slack:
+  notify-via-slack-fail:
+    steps:
+      - run: echo Slack Notification
+      - slack/notify:
+          event: 'fail'
+          channel: 'cinema-circle-ci'
+          template: 'basic_fail_1'
+
+  notify-via-slack-deployment:
     steps:
       - run: echo "Slack notification"
       - slack/notify:
@@ -120,8 +128,7 @@ jobs:
       - *restore_cache
       - *install_dependencies
       - *save_cache
-      - notify-via-slack
-
+      - notify-via-slack-fail
   linting:
     executor: app-executor
     steps:
@@ -131,6 +138,7 @@ jobs:
       - run:
           name: Run Linting
           command: npm run lint
+      - notify-via-slack-fail
 
   prettier:
     executor: app-executor
@@ -144,6 +152,7 @@ jobs:
       - run:
           name: run prettier write
           command: npm run prettier:write
+      - notify-via-slack-fail
 
   deploy-to-aws-s3:
     executor: app-executor
@@ -165,6 +174,8 @@ jobs:
             then
               aws --region ${AWS_REGION} s3 sync ~/project/build s3://${AWS_DEV_BUCKET} --delete
             fi
+      - notify-via-slack-fail
+
   deploy-to-aws-cloudfront:
     executor: app-executor
     steps:
@@ -191,7 +202,7 @@ jobs:
             then
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTIBUTION_ID} --paths "/*"
             fi
-      - notify-via-slack
+      - notify-via-slack-deployment
 
 workflows:
   build_and_deploy:
