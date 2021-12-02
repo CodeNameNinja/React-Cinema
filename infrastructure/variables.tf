@@ -2,6 +2,6 @@ variable "prefix" {
   default = "ninja-cinema"
 }
 
-variable "projects" {
+variable "project" {
   default = "ninja-cinema-app"
 }
