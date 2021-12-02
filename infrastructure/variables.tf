@@ -1,7 +1,7 @@
 variable "prefix" {
-      default = "ninja-cinema"
+  default = "ninja-cinema"
 }
 
 variable "projects" {
-    default = "ninja-cinema-app"
+  default = "ninja-cinema-app"
 }
