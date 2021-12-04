@@ -131,6 +131,13 @@ jobs:
       - *restore_cache
       - *install_dependencies
       - *save_cache
+      - run:
+          name: Copy Infrastructure folder
+          command: cp -r infrastructure artifacts/infrastructure
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - artifacts
       - notify-via-slack-fail
   linting:
     executor: app-executor
