@@ -99,7 +99,9 @@ aliases:
   - &install_dependencies
     run:
       name: Install Dependencies
-      command: npm install
+      command: |
+        mkdir -p artifacts
+        npm install
   - &save_cache
     save_cache:
       paths:
@@ -133,7 +135,8 @@ jobs:
       - *save_cache
       - run:
           name: Copy Infrastructure folder
-          command: cp -r infrastructure artifacts/infrastructure
+          command: |
+            cp -r infrastructure artifacts/infrastructure
       - persist_to_workspace:
           root: ./
           paths:
