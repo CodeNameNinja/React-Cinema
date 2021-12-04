@@ -82,6 +82,9 @@ executors:
     docker:
       - image: 'cimg/base:stable'
     resource_class: small
+  terraform-executor:
+    docker:
+      - image: 'hashicorp/terraform:1.0.11'
 
 aliases:
   - &show-current-branch-name
@@ -152,6 +155,20 @@ jobs:
       - run:
           name: run prettier write
           command: npm run prettier:write
+      - notify-via-slack-fail
+
+  terraform-validate:
+    executor: terraform-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - run:
+          name: Terraform validate
+          command: |
+            cd infrastructure/
+            terraform init -backend=false
+            terraform validate
+            terraform fmt -check
       - notify-via-slack-fail
 
   deploy-to-aws-s3:
